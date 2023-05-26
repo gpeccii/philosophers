@@ -6,7 +6,7 @@
 /*   By: gpecci <gpecci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:07:41 by gpecci            #+#    #+#             */
-/*   Updated: 2023/05/24 18:27:58 by gpecci           ###   ########.fr       */
+/*   Updated: 2023/05/26 19:58:25 by gpecci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_philo
 
 typedef struct s_data
 {
-	pthread_t		tid;
+	pthread_t		*tid;
 	int				total_philo;
 	int				meals_nb;
 	int				dead;
@@ -63,5 +63,11 @@ int			ft_atoi(const char *str);
 u_int64_t	get_time(void);
 int			ft_usleep(useconds_t time);
 void		*routine(void *data_pointer);
+void		*nurse(void *pointer);
+void		*waiter(void *food);
+void		ft_exit(t_data *data);
+int			error(char *str, t_data *data);
+void		clear_data(t_data *data);
+void		message(char *str, t_philo *philo);
 
 #endif
