@@ -6,7 +6,7 @@
 /*   By: gpecci <gpecci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:07:41 by gpecci            #+#    #+#             */
-/*   Updated: 2023/05/29 12:51:42 by gpecci           ###   ########.fr       */
+/*   Updated: 2023/05/29 16:16:58 by gpecci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ typedef struct s_philo
 	u_int64_t		eat_time;
 	u_int64_t		sleep_time;
 	int				eat_cont;
-	int				status;
 	int				max_meals;
 	int				eating;
 	pthread_mutex_t	lock;
@@ -72,10 +71,13 @@ void		clear_data(t_data *data);
 void		message(char *str, t_philo *philo);
 void		eating(t_philo *philo);
 int			set_alloc(t_data *data);
-void		init_philos(t_data *data, int argc);
+void		init_philos(t_data *data);
 int			init_forks(t_data *data);
-void		init_data(t_data *data, int argc, char **argv);
+int			init_data(t_data *data, int argc, char **argv);
 int			init_threads(t_data *data);
-
+int			ft_strcmp(char *s1, char *s2);
+int			init(t_data *data, int argc, char **argv);
+int			case_one(t_data *data);
+int			input_checker(char **argv);
 
 #endif

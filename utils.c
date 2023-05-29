@@ -6,7 +6,7 @@
 /*   By: gpecci <gpecci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:17:44 by gpecci            #+#    #+#             */
-/*   Updated: 2023/05/26 20:04:41 by gpecci           ###   ########.fr       */
+/*   Updated: 2023/05/29 16:21:35 by gpecci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,40 +59,26 @@ int	ft_usleep(useconds_t time)
 
 void	message(char *str, t_philo *philo)
 {
+	u_int64_t	time;
+
 	pthread_mutex_lock(&philo->data->write);
-	printf("%llu %d %s\n", (get_time() - philo->data->start_time), philo->id, str);
+	time = get_time() - philo->data->start_time;
+	if (ft_strcmp("died", str) == 0 && philo->data->dead == 0)
+	{
+		printf("%llu %d %s\n", time, philo->id, str);
+		philo->data->dead = 1;
+	}
+	if (!philo->data->dead)
+		printf("%llu %d %s\n", time, philo->id, str);
 	pthread_mutex_unlock(&philo->data->write);
 }
 
-int	error(char *str, t_data *data)
+int	ft_strcmp(char *s1, char *s2)
 {
-	printf("%s\n", str);
-	if (data)
-		ft_exit(data);
-	return (1);
-}
-
-void	clear_data(t_data *data)
-{
-	if (data->tid)
-		free(data->tid);
-	if (data->forks)
-		free(data->forks);
-	if (data->philos)
-		free(data->philos);
-}
-
-void	ft_exit(t_data *data)
-{
-	int	i;
-
-	i = -1;
-	while (++i < data->total_philo)
+	while (*s1 != '\0' && (*s1 == *s2))
 	{
-		pthread_mutex_destroy(&data->forks[i]);
-		pthread_mutex_destroy(&data->philos[i].lock);
+		s1++;
+		s2++;
 	}
-	pthread_mutex_destroy(&data->write);
-	pthread_mutex_destroy(&data->lock);
-	clear_data(data);
+	return (*(char *)s1 - *(char *)s2);
 }

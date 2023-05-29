@@ -6,7 +6,7 @@
 #    By: gpecci <gpecci@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/26 12:04:19 by gpecci            #+#    #+#              #
-#    Updated: 2023/05/29 12:50:34 by gpecci           ###   ########.fr        #
+#    Updated: 2023/05/29 16:21:59 by gpecci           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,8 @@ SRCS =	philo.c \
 		utils.c \
 		init.c \
 		eat.c \
+		limit_cases.c \
+		exit.c \
 
 OBJS = ${SRCS:.c=.o}
 

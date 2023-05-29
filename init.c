@@ -6,7 +6,7 @@
 /*   By: gpecci <gpecci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 12:48:14 by gpecci            #+#    #+#             */
-/*   Updated: 2023/05/29 13:04:12 by gpecci           ###   ########.fr       */
+/*   Updated: 2023/05/29 16:20:37 by gpecci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,20 @@ int	set_alloc(t_data *data)
 	return (0);
 }
 
-void	init_philos(t_data *data, int argc)
+void	init_philos(t_data *data)
 {
 	int	i;
 
 	i = -1;
-	while(++i < data->total_philo)
+	while (++i < data->total_philo)
 	{
 		data->philos[i].data = data;
 		data->philos[i].id = i + 1;
 		data->philos[i].eat_time = data->start_time;
 		data->philos[i].eat_cont = 0;
-		data->philos[i].status = 0;
 		data->philos[i].eating = 0;
 		data->philos[i].die_time = data->time_to_death;
-		data->philos[i].max_meals = -1;
-		if (argc == 6)
-			data->philos[i].max_meals = data->meals_nb;
+		data->philos[i].max_meals = data->meals_nb;
 		pthread_mutex_init(&data->philos[i].lock, NULL);
 	}
 }
@@ -67,7 +64,7 @@ int	init_forks(t_data *data)
 	return (0);
 }
 
-void	init_data(t_data *data, int argc, char **argv)
+int	init_data(t_data *data, int argc, char **argv)
 {
 	data->total_philo = (int) ft_atoi(argv[1]);
 	data->time_to_death = (u_int64_t) ft_atoi(argv[2]);
@@ -76,11 +73,16 @@ void	init_data(t_data *data, int argc, char **argv)
 	data->meals_nb = -1;
 	if (argc == 6)
 		data->meals_nb = (int) ft_atoi(argv[5]);
+	if (data->total_philo <= 0 || data->total_philo > 200
+		|| data->time_to_death < 0
+		|| data->time_to_eat < 0 || data->time_to_sleep < 0)
+		return (error("INVALID INPUT VALUES", NULL));
 	data->start_time = get_time();
 	data->dead = 0;
 	data->finished = 0;
 	pthread_mutex_init(&data->lock, NULL);
 	pthread_mutex_init(&data->write, NULL);
+	return (0);
 }
 
 int	init_threads(t_data *data)
@@ -106,6 +108,7 @@ int	init_threads(t_data *data)
 	{
 		if (pthread_join(data->tid[i], NULL))
 			return (error("ERROR WHILE JOINING THREADS", data));
+		i++;
 	}
 	return (0);
 }
