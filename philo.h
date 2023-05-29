@@ -6,7 +6,7 @@
 /*   By: gpecci <gpecci@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:07:41 by gpecci            #+#    #+#             */
-/*   Updated: 2023/05/26 19:58:25 by gpecci           ###   ########.fr       */
+/*   Updated: 2023/05/29 12:51:42 by gpecci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ struct	s_data;
 typedef struct s_philo
 {
 	struct s_data	*data;
+	pthread_t		t1;
 	int				id;
 	u_int64_t		die_time;
 	u_int64_t		eat_time;
@@ -69,5 +70,12 @@ void		ft_exit(t_data *data);
 int			error(char *str, t_data *data);
 void		clear_data(t_data *data);
 void		message(char *str, t_philo *philo);
+void		eating(t_philo *philo);
+int			set_alloc(t_data *data);
+void		init_philos(t_data *data, int argc);
+int			init_forks(t_data *data);
+void		init_data(t_data *data, int argc, char **argv);
+int			init_threads(t_data *data);
+
 
 #endif
